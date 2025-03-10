@@ -1,53 +1,60 @@
-let gameDuration = 30000; // 30 seconds
-let countdown = 30;
-let countdownInterval;
-let progressBar;
+let colors = generateRandomColors(6);
+let squares = document.querySelectorAll(".square");
+let pickedColor = pickColor();
+let colorDisplay = document.getElementById("colorDisplay");
+let messageDisplay = document.getElementById("message");
+let resetButton = document.getElementById("reset");
 
-function startGame() {
-    document.getElementById("result").innerText = "Game Started!";
+colorDisplay.textContent = pickedColor;
 
-    countdown = 30;
-    updateCountdown();
-    startProgressBar();
+for (let i = 0; i < squares.length; i++) {
+    squares[i].style.backgroundColor = colors[i];
 
-    countdownInterval = setInterval(() => {
-        countdown--;
-        document.getElementById("countdown").innerText = countdown;
-
-        if (countdown <= 0) {
-            clearInterval(countdownInterval);
-            endGame();
+    squares[i].addEventListener("click", function() {
+        let clickedColor = this.style.backgroundColor;
+        if (clickedColor === pickedColor) {
+            messageDisplay.textContent = "Correct!";
+            changeColors(clickedColor);
+        } else {
+            this.style.backgroundColor = "#f4f4f4";
+            messageDisplay.textContent = "Try Again!";
         }
-    }, 1000);
+    });
 }
 
-function endGame() {
-    let winningNumber = Math.floor(Math.random() * 100) + 1;
-    document.getElementById("result").innerText = "Winning Number: " + winningNumber;
+resetButton.addEventListener("click", function() {
+    colors = generateRandomColors(6);
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+    messageDisplay.textContent = "";
 
-    setTimeout(() => {
-        startGame(); // Restart the game after 30 seconds
-    }, 1000);
-}
-
-function updateCountdown() {
-    document.getElementById("countdown").innerText = countdown;
-}
-
-function startProgressBar() {
-    progressBar = document.querySelector(".progress-bar");
-    progressBar.style.transition = "width 30s linear";
-    progressBar.style.width = "100%";
-    setTimeout(() => {
-        progressBar.style.width = "0%";
-    }, 50);
-}
-
-document.getElementById("startButton").addEventListener("click", () => {
-    startGame();
-    document.getElementById("startButton").style.display = "none"; // Hide button after first start
+    for (let i = 0; i < squares.length; i++) {
+        squares[i].style.backgroundColor = colors[i];
+    }
 });
 
-window.onload = () => {
-    document.getElementById("countdown").innerText = countdown;
-};
+function changeColors(color) {
+    for (let i = 0; i < squares.length; i++) {
+        squares[i].style.backgroundColor = color;
+    }
+}
+
+function pickColor() {
+    let random = Math.floor(Math.random() * colors.length);
+    return colors[random];
+}
+
+function generateRandomColors(num) {
+    let arr = [];
+    for (let i = 0; i < num; i++) {
+        arr.push(randomColor());
+    }
+    return arr;
+}
+
+function randomColor() {
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+    return "rgb(" + r + ", " + g + ", " + b + ")";
+}
