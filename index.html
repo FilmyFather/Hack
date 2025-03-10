@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Lottery Game (30s)</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Color Guessing Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Fast Lottery Game</h1>
-        <p>Next round in: <span id="countdown">30</span> seconds</p>
-        <div class="progress-bar"></div>
-        <button id="startButton">Start Game</button>
-        <div id="result"></div>
+    <h1>Guess the Color: <span id="colorDisplay"></span></h1>
+    <h2 id="message"></h2>
+    <div id="container">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
     </div>
-
+    <button id="reset">New Colors</button>
     <script src="script.js"></script>
 </body>
 </html>
